@@ -1,11 +1,15 @@
 package com.onlinelibrary.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import com.onlinelibrary.Model.User;
+import com.onlinelibrary.Util.HibernateUtil;
 
 public class UserDAOImpl implements UserDAO{
 	
@@ -14,36 +18,96 @@ public class UserDAOImpl implements UserDAO{
 		return sessionFactory.getCurrentSession();
 	}
 	
-	@Override
 	public void save(User user) {
-		getCurrentSession().save(user);
-	}
+        Transaction trns = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trns = session.beginTransaction();
+            session.save(user);
+            session.getTransaction().commit();
+        } catch (RuntimeException e) {
+            if (trns != null) {
+                trns.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.flush();
+            session.close();
+        }
+    }
 
 	@Override
 	public void update(User user) {
-		User userToUpdate = get(user.getId());
-		userToUpdate.setName(user.getName());
-		userToUpdate.setSurname(user.getSurname());
-		userToUpdate.setCity(user.getCity());
-		userToUpdate.setStreetAddress(user.getStreetAddress());
-		userToUpdate.setEmail(user.getCity());
-		userToUpdate.setPhoneNumber(user.getPhoneNumber());
-		getCurrentSession().update(userToUpdate);
-	}
+        Transaction trns = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trns = session.beginTransaction();
+            session.update(user);
+            session.getTransaction().commit();
+        } catch (RuntimeException e) {
+            if (trns != null) {
+                trns.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.flush();
+            session.close();
+        }
+    }
 
 	@Override
-	public void delete(User user) {
-		getCurrentSession().delete(user);
-	}
+    public void delete(User user) {
+        Transaction trns = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trns = session.beginTransaction();
+            session.delete(user);
+            session.getTransaction().commit();
+        } catch (RuntimeException e) {
+            if (trns != null) {
+                trns.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.flush();
+            session.close();
+        }
+    }
 
 	@Override
 	public User get(Integer id) {
-		User user = (User) getCurrentSession().get(User.class, id);
-		return user;
-	}
+        User user = null;
+        Transaction trns = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trns = session.beginTransaction();
+            String queryString = "from User where id = :id";
+            Query query = session.createQuery(queryString);
+            query.setInteger("id", id);
+            user = (User) query.uniqueResult();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return user;
+    }
 
 	@Override
-	public List<User> getAll() {
-		return getCurrentSession().createQuery("from User").list();
-	}
+    public List<User> getAll() {
+        List<User> users = new ArrayList<User>();
+        Transaction trns = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trns = session.beginTransaction();
+            users = session.createQuery("from User").list();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return users;
+    }
 }
