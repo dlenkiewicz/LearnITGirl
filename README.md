@@ -17,3 +17,5 @@ Repository for my Java application written during LearnITGirl mentorship program
 			week 2 - Creating mock database and POJO classes.
 
 			week 3 - Learning HTML & CSS. Writing DAO classes.
+			
+			week 4 - Learning RESTful Web Services. Writing service layer.
