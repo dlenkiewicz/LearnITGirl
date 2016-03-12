@@ -23,8 +23,7 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T>{
 		return entityBeanType;
 		}
 
-	@Override
-	public void save(T domain) {
+	public void create(T domain) {
 		Transaction trns = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -42,7 +41,6 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T>{
         }
 	}
 
-	@Override
 	public void update(T domain) {
 		Transaction trns = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -61,12 +59,12 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T>{
         }	
 	}
 
-	@Override
-	public void delete(T domain) {
-		Transaction trns = null;
+	public void delete(int id) {
+        Transaction trns = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             trns = session.beginTransaction();
+            T domain = get(id);
             session.delete(domain);
             session.getTransaction().commit();
         } catch (RuntimeException e) {
@@ -77,10 +75,9 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T>{
         } finally {
             session.flush();
             session.close();
-        }		
-	}
+        }
+    }
 
-	@Override
 	public T get(Integer id) {
 		T domain = null;
         Transaction trns = null;
@@ -100,7 +97,6 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T>{
         return domain;
 	}
 
-	@Override
 	public List<T> getAll() {
 		List<T> domains = new ArrayList<T>();
         Transaction trns = null;

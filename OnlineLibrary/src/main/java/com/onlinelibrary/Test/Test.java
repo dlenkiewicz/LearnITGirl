@@ -14,14 +14,14 @@ public class Test {
         user.setSurname("Smith");
         user.setEmail("carl.smith@gmail.com");
         user.setPassword("strongpsswd");
-        dao.save(user);
+        dao.create(user);
 
         // Update user
         user.setEmail("carl.smith.updated@gmail.com");
         dao.update(user);
 
         // Delete user
-        dao.delete(user);
+        dao.delete(user.getId());
 
         // Get all users
         for (User iter : dao.getAll()) {
