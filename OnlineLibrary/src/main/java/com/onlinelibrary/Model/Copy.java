@@ -2,6 +2,8 @@ package com.onlinelibrary.Model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import java.util.List;
 
 
@@ -12,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name="copies")
 @NamedQuery(name="Copy.findAll", query="SELECT c FROM Copy c")
+@XmlRootElement(name = "copies")
 public class Copy implements Serializable {
 	private static final long serialVersionUID = 1L;
 

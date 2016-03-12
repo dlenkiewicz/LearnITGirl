@@ -2,6 +2,7 @@ package com.onlinelibrary.Model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="book_category")
 @NamedQuery(name="BookCategory.findAll", query="SELECT b FROM BookCategory b")
+@XmlRootElement(name = "book_category")
 public class BookCategory implements Serializable {
 	private static final long serialVersionUID = 1L;
 

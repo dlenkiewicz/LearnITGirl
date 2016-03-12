@@ -2,6 +2,8 @@ package com.onlinelibrary.Model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -13,6 +15,7 @@ import java.util.Date;
 @Entity
 @Table(name="books_out_on_loan")
 @NamedQuery(name="BooksOutOnLoan.findAll", query="SELECT b FROM BooksOutOnLoan b")
+@XmlRootElement(name = "books_out_on_loan")
 public class BooksOutOnLoan implements Serializable {
 	private static final long serialVersionUID = 1L;
 

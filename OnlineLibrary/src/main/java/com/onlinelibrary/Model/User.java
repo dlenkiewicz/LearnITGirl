@@ -2,6 +2,8 @@ package com.onlinelibrary.Model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
@@ -11,6 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="users")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+@XmlRootElement(name = "user")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -40,7 +43,7 @@ public class User implements Serializable {
 	public Integer getId() {
 		return this.id;
 	}
-
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -48,7 +51,7 @@ public class User implements Serializable {
 	public String getCity() {
 		return this.city;
 	}
-
+	
 	public void setCity(String city) {
 		this.city = city;
 	}
@@ -56,7 +59,7 @@ public class User implements Serializable {
 	public String getEmail() {
 		return this.email;
 	}
-
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -64,7 +67,7 @@ public class User implements Serializable {
 	public String getName() {
 		return this.name;
 	}
-
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -72,7 +75,7 @@ public class User implements Serializable {
 	public String getPassword() {
 		return this.password;
 	}
-
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -80,7 +83,7 @@ public class User implements Serializable {
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}
-
+	
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
@@ -88,7 +91,7 @@ public class User implements Serializable {
 	public String getStreetAddress() {
 		return this.streetAddress;
 	}
-
+	
 	public void setStreetAddress(String streetAddress) {
 		this.streetAddress = streetAddress;
 	}
@@ -96,7 +99,7 @@ public class User implements Serializable {
 	public String getSurname() {
 		return this.surname;
 	}
-
+	
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
