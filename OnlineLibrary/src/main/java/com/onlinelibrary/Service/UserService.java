@@ -44,9 +44,8 @@ public class UserService {
 		userDao.delete(id);
 	   }
 	
-	/*@PUT
+	@PUT
 	@Path("/users")
-	@Produces(MediaType.APPLICATION_XML)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void create(@FormParam("name") String name,
 			@FormParam("surname") String surname,
@@ -65,5 +64,27 @@ public class UserService {
 				user.setPassword(password);
 				user.setPhoneNumber(phoneNumber);
 				userDao.create(user);
-			}*/
+			}
+	
+	@POST
+	@Path("/users")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public void update(@FormParam("name") String name,
+			@FormParam("surname") String surname,
+			@FormParam("street_address") String streetAddress,
+			@FormParam("city") String city,
+			@FormParam("email") String email,
+			@FormParam("password") String password,
+			@FormParam("phone_number") String phoneNumber,
+			@Context HttpServletResponse servletResponse) throws IOException{
+				User user = new User();
+				user.setName(name);
+				user.setSurname(surname);
+				user.setStreetAddress(streetAddress);
+				user.setCity(city);
+				user.setEmail(email);
+				user.setPassword(password);
+				user.setPhoneNumber(phoneNumber);
+				userDao.update(user);
+			}
 }
