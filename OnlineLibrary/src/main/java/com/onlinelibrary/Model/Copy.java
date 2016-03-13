@@ -2,7 +2,10 @@ package com.onlinelibrary.Model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import java.util.List;
 
@@ -15,6 +18,7 @@ import java.util.List;
 @Table(name="copies")
 @NamedQuery(name="Copy.findAll", query="SELECT c FROM Copy c")
 @XmlRootElement(name = "copies")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Copy implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,11 +26,9 @@ public class Copy implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name="copy_number")
-	private Integer copyNumber;
-
 	//bi-directional many-to-one association to BooksOutOnLoan
 	@OneToMany(mappedBy="copy")
+	@XmlTransient
 	private List<BooksOutOnLoan> booksOutOnLoans;
 
 	//bi-directional many-to-one association to Book
@@ -43,14 +45,6 @@ public class Copy implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getCopyNumber() {
-		return this.copyNumber;
-	}
-
-	public void setCopyNumber(Integer copyNumber) {
-		this.copyNumber = copyNumber;
 	}
 
 	public List<BooksOutOnLoan> getBooksOutOnLoans() {

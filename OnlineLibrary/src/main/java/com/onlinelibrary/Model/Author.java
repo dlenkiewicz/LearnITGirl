@@ -2,10 +2,12 @@ package com.onlinelibrary.Model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import java.util.List;
-
 
 /**
  * The persistent class for the author database table.
@@ -14,6 +16,7 @@ import java.util.List;
 @Entity
 @NamedQuery(name="Author.findAll", query="SELECT a FROM Author a")
 @XmlRootElement(name = "authors")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Author implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +29,8 @@ public class Author implements Serializable {
 	private String surname;
 
 	//bi-directional many-to-one association to Authorship
-	@OneToMany(mappedBy="author")
+	@OneToMany(mappedBy="author", fetch=FetchType.EAGER)
+	@XmlTransient
 	private List<Authorship> authorships;
 
 	public Author() {

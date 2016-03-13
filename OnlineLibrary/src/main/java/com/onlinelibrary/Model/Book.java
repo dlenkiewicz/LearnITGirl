@@ -2,7 +2,10 @@ package com.onlinelibrary.Model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import java.util.List;
 
@@ -15,6 +18,7 @@ import java.util.List;
 @Table(name="books")
 @NamedQuery(name="Book.findAll", query="SELECT b FROM Book b")
 @XmlRootElement(name = "books")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Book implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -31,14 +35,17 @@ public class Book implements Serializable {
 
 	//bi-directional many-to-one association to Authorship
 	@OneToMany(mappedBy="book")
+	@XmlTransient
 	private List<Authorship> authorships;
 
 	//bi-directional many-to-one association to BookCategory
 	@OneToMany(mappedBy="book")
+	@XmlTransient
 	private List<BookCategory> bookCategories;
 
 	//bi-directional many-to-one association to Copy
 	@OneToMany(mappedBy="book")
+	@XmlTransient
 	private List<Copy> copies;
 
 	public Book() {
