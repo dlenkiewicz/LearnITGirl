@@ -52,10 +52,10 @@ public class AuthorService {
 	public void create(@FormParam("name") String name,
 			@FormParam("surname") String surname,
 			@Context HttpServletResponse servletResponse) throws IOException{
-				Author Author = new Author();
-				Author.setName(name);
-				Author.setSurname(surname);
-				authorDao.create(Author);
+				Author author = new Author();
+				author.setName(name);
+				author.setSurname(surname);
+				authorDao.create(author);
 			}
 	
 	@POST
@@ -64,9 +64,9 @@ public class AuthorService {
 	public void update(@FormParam("name") String name,
 			@FormParam("surname") String surname,
 			@Context HttpServletResponse servletResponse) throws IOException{
-				Author Author = new Author();
-				Author.setName(name);
-				Author.setSurname(surname);
-				authorDao.update(Author);
+				Author author = new Author();
+				author.setName(name);
+				author.setSurname(surname);
+				authorDao.update(author);
 			}
 }
