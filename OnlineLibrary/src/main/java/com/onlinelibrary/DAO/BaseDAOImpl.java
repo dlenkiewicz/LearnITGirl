@@ -83,7 +83,6 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T>{
         Transaction trns = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            trns = session.beginTransaction();
             String queryString = "from " + getEntityBeanType().getName() + " where id = :id";
             Query query = session.createQuery(queryString);
             query.setInteger("id", id);
@@ -102,7 +101,6 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T>{
         Transaction trns = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            trns = session.beginTransaction();
             domains = session.createQuery("from " + getEntityBeanType().getName()).list();
         } catch (RuntimeException e) {
             e.printStackTrace();
