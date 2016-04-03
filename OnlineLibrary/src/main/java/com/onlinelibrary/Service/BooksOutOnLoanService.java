@@ -2,6 +2,8 @@ package com.onlinelibrary.Service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -54,44 +56,69 @@ public class BooksOutOnLoanService {
 	@PUT
 	@Path("/booksoutonloan")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void create(@FormParam("amount_of_fine") String isbn,
-			@FormParam("date_of_publication") BigDecimal amountOfFine,
-			@FormParam("date_due_for_return") Date dateDueForReturn,
-			@FormParam("date_issued") Date dateIssued,
-			@FormParam("date_returned") Date dateReturned,
+	public void create(@FormParam("amount_of_fine") BigDecimal amountOfFine,
+			@FormParam("date_due_for_return") String dateDueForReturn,
+			@FormParam("date_issued") String dateIssued,
+			@FormParam("date_returned") String dateReturned,
 			@FormParam("userId") int userId,
 			@FormParam("copyId") int copyId,
 			@Context HttpServletResponse servletResponse) throws IOException{
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");		
 				BooksOutOnLoan bookoutonloan = new BooksOutOnLoan();
 				User user = new UserDAOImpl().get(userId);
 				Copy copy = new CopyDAOImpl().get(copyId);
 				bookoutonloan.setAmountOfFine(amountOfFine);
-				bookoutonloan.setDateDueForReturn(dateDueForReturn);
-				bookoutonloan.setDateIssued(dateIssued);
-				bookoutonloan.setDateReturned(dateReturned);
+				try {
+					bookoutonloan.setDateDueForReturn(dateFormat.parse(dateDueForReturn));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				try {
+					bookoutonloan.setDateIssued(dateFormat.parse(dateIssued));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				try {
+					bookoutonloan.setDateReturned(dateFormat.parse(dateReturned));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
 				bookoutonloan.setCopy(copy);
 				bookoutonloan.setUser(user);
 				booksOutOnLoanDao.create(bookoutonloan);
 			}
 	
 	@POST
-	@Path("/booksoutonloan")
+	@Path("/booksoutonloan/{id}")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void update(@FormParam("amount_of_fine") String isbn,
-			@FormParam("date_of_publication") BigDecimal amountOfFine,
-			@FormParam("date_due_for_return") Date dateDueForReturn,
-			@FormParam("date_issued") Date dateIssued,
-			@FormParam("date_returned") Date dateReturned,
+	public void update(@PathParam("id") int id,
+			@FormParam("amount_of_fine") BigDecimal amountOfFine,
+			@FormParam("date_due_for_return") String dateDueForReturn,
+			@FormParam("date_issued") String dateIssued,
+			@FormParam("date_returned") String dateReturned,
 			@FormParam("userId") int userId,
 			@FormParam("copyId") int copyId,
 			@Context HttpServletResponse servletResponse) throws IOException{
-				BooksOutOnLoan bookoutonloan = new BooksOutOnLoan();
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");		
+				BooksOutOnLoan bookoutonloan = new BooksOutOnLoanDAOImpl().get(id);
 				User user = new UserDAOImpl().get(userId);
 				Copy copy = new CopyDAOImpl().get(copyId);
 				bookoutonloan.setAmountOfFine(amountOfFine);
-				bookoutonloan.setDateDueForReturn(dateDueForReturn);
-				bookoutonloan.setDateIssued(dateIssued);
-				bookoutonloan.setDateReturned(dateReturned);
+				try {
+					bookoutonloan.setDateDueForReturn(dateFormat.parse(dateDueForReturn));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				try {
+					bookoutonloan.setDateIssued(dateFormat.parse(dateIssued));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				try {
+					bookoutonloan.setDateReturned(dateFormat.parse(dateReturned));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
 				bookoutonloan.setCopy(copy);
 				bookoutonloan.setUser(user);
 				booksOutOnLoanDao.update(bookoutonloan);

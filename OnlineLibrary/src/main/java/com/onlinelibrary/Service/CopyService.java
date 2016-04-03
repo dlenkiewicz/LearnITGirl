@@ -54,21 +54,22 @@ public class CopyService {
 	@PUT
 	@Path("/copies")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void create(@FormParam("bookId") int bookId,
+	public void create(@FormParam("isbn") String isbn,
 			@Context HttpServletResponse servletResponse) throws IOException{
 				Copy copy = new Copy();
-				Book book = new BookDAOImpl().get(bookId);
+				System.out.println(isbn);
+				Book book = new BookDAOImpl().get(isbn);
 				copy.setBook(book);
 				copyDao.create(copy);
 			}
 	
 	@POST
-	@Path("/copies")
+	@Path("/copies/{id}")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void update(@FormParam("bookId") int bookId,
+	public void update(@PathParam("id") int id, @FormParam("isbn") String isbn,
 			@Context HttpServletResponse servletResponse) throws IOException{
-				Copy copy = new Copy();
-				Book book = new BookDAOImpl().get(bookId);
+				Copy copy = new CopyDAOImpl().get(id);
+				Book book = new BookDAOImpl().get(isbn);
 				copy.setBook(book);
 				copyDao.update(copy);
 			}

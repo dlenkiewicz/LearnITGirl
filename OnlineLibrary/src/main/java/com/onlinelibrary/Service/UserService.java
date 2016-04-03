@@ -67,9 +67,10 @@ public class UserService {
 			}
 	
 	@POST
-	@Path("/users")
+	@Path("/users/{id}")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void update(@FormParam("name") String name,
+	public void update(@PathParam("id") int id,
+			@FormParam("name") String name,
 			@FormParam("surname") String surname,
 			@FormParam("street_address") String streetAddress,
 			@FormParam("city") String city,
@@ -77,7 +78,7 @@ public class UserService {
 			@FormParam("password") String password,
 			@FormParam("phone_number") String phoneNumber,
 			@Context HttpServletResponse servletResponse) throws IOException{
-				User user = new User();
+				User user = new UserDAOImpl().get(id);
 				user.setName(name);
 				user.setSurname(surname);
 				user.setStreetAddress(streetAddress);

@@ -49,30 +49,27 @@ public class BookCategoryService {
 	
 	@PUT
 	@Path("/bookcategories")
-	public void create(@FormParam("isbn") int isbn, @FormParam("categoryId") int categoryId){
-		//System.out.println(authorId + "," + bookId);
+	public void create(@FormParam("isbn") String isbn, @FormParam("categoryId") int categoryId){
 		Category category = new CategoryDAOImpl().get(categoryId);
 		Book book = new BookDAOImpl().get(isbn);
 		BookCategory bookCategory = new BookCategory();
 		bookCategory.setCategory(category);
 		bookCategory.setBook(book);
-		// te dwie linijki ni¿ej mog¹ byæ potrzebne
-		// mo¿e te¿ trzeba sprawdziæ, czy s¹ null, ale baza powinna zwróciæ pust¹ listê zamiast nulla
-		category.getBookCategories().add(bookCategory);
-		book.getBookCategories().add(bookCategory);
-		////////////////////////
+		//category.getBookCategories().add(bookCategory);
+		//book.getBookCategories().add(bookCategory);
 		bookCategoryDao.create(bookCategory);
 		}
 	
 	@POST
-	@Path("/bookcategories")
-	public void update(@FormParam("isbn") int isbn, @FormParam("categoryId") int categoryId){
-		//System.out.println(authorId + "," + bookId);
-		Category category = new CategoryDAOImpl().get(categoryId);
-		Book book = new BookDAOImpl().get(isbn);
-		BookCategory bookCategory = new BookCategory();
-		bookCategory.setCategory(category);
-		bookCategory.setBook(book);
-		bookCategoryDao.update(bookCategory);
+	@Path("/bookcategories/{id}")
+	public void update(@PathParam("id") int id, 
+			@FormParam("isbn") String isbn, 
+			@FormParam("categoryId") int categoryId){
+				BookCategory bookCategory = new BookCategoryDAOImpl().get(id);
+				Category category = new CategoryDAOImpl().get(categoryId);
+				Book book = new BookDAOImpl().get(isbn);
+				bookCategory.setCategory(category);
+				bookCategory.setBook(book);
+				bookCategoryDao.update(bookCategory);
 		}
 }

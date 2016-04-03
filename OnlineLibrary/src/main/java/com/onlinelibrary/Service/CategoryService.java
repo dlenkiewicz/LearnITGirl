@@ -62,11 +62,12 @@ public class CategoryService {
 			}
 	
 	@POST
-	@Path("/categories")
+	@Path("/categories/{id}")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void update(@FormParam("name") String name,
+	public void update(@PathParam("id") int id,
+			@FormParam("name") String name,
 			@Context HttpServletResponse servletResponse) throws IOException{
-				Category category = new Category();
+				Category category = new CategoryDAOImpl().get(id);
 				category.setName(name);
 				categoryDao.update(category);
 			}

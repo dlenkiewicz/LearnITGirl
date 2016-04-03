@@ -44,11 +44,11 @@ public class BooksOutOnLoan implements Serializable {
 
 	//bi-directional many-to-one association to Copy
 	@ManyToOne
-	@XmlTransient
+	//@XmlTransient
 	private Copy copy;
 	
 	@ManyToOne
-	@XmlTransient
+	//@XmlTransient
 	@JoinColumn(name="u_id")
 	private User user;
 	

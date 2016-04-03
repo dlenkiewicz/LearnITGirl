@@ -47,27 +47,22 @@ public class AuthorshipService {
 	@PUT
 	@Path("/authorships")
 	public void create(@FormParam("authorId") int authorId, @FormParam("isbn") String isbn){
-		//System.out.println(authorId + "," + bookId);
 		Author author = new AuthorDAOImpl().get(authorId);
 		Book book = new BookDAOImpl().get(isbn);
 		Authorship authorship = new Authorship();
 		authorship.setAuthor(author);
 		authorship.setBook(book);
-		// te dwie linijki ni¿ej mog¹ byæ potrzebne
-		// mo¿e te¿ trzeba sprawdziæ, czy s¹ null, ale baza powinna zwróciæ pust¹ listê zamiast nulla
-		author.getAuthorships().add(authorship);
-		book.getAuthorships().add(authorship);
-		////////////////////////
+		//author.getAuthorships().add(authorship);
+		//book.getAuthorships().add(authorship);
 		authorshipDao.create(authorship);
 	}
 	
 	@POST
-	@Path("/authorships")
-	public void update(@FormParam("authorId") int authorId, @FormParam("isbn") String isbn){
-		//System.out.println(authorId + "," + bookId);
+	@Path("/authorships/{id}")
+	public void update(@PathParam("id") int id, @FormParam("authorId") int authorId, @FormParam("isbn") String isbn){
+		Authorship authorship = new AuthorshipDAOImpl().get(id);
 		Author author = new AuthorDAOImpl().get(authorId);
 		Book book = new BookDAOImpl().get(isbn);
-		Authorship authorship = new Authorship();
 		authorship.setAuthor(author);
 		authorship.setBook(book);
 		authorshipDao.update(authorship);

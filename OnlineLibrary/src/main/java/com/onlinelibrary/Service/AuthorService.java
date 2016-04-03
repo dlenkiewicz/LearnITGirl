@@ -59,12 +59,13 @@ public class AuthorService {
 			}
 	
 	@POST
-	@Path("/authors")
+	@Path("/authors/{id}")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void update(@FormParam("name") String name,
+	public void update(@PathParam("id") int id,
+			@FormParam("name") String name,
 			@FormParam("surname") String surname,
 			@Context HttpServletResponse servletResponse) throws IOException{
-				Author author = new Author();
+				Author author = new AuthorDAOImpl().get(id);
 				author.setName(name);
 				author.setSurname(surname);
 				authorDao.update(author);

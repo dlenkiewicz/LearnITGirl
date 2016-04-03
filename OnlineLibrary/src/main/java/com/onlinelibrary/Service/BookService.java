@@ -32,18 +32,34 @@ public class BookService {
 	   }	
 	
 	@GET
-	@Path("/books/{id}")
+	@Path("/books/{isbn}")
 	@Produces(MediaType.APPLICATION_XML)
-	public Book get(@PathParam("id") int id){
-		return bookDao.get(id);
+	public Book get(@PathParam("isbn") String isbn){
+		return bookDao.get(isbn);
 	   }
 	
 	@DELETE
-	@Path("/books/{id}")
+	@Path("/books/{isbn}")
 	@Produces(MediaType.APPLICATION_XML)
-	public void delete(@PathParam("id") int id){
-		bookDao.delete(id);
+	public void delete(@PathParam("isbn") String isbn){
+		bookDao.delete(isbn);
 	   }
+	
+	@POST
+	@Path("/books/{isbn}")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public void update(@PathParam("isbn") String isbn,
+			@FormParam("date_of_publication") int dateOfPublication,
+			@FormParam("publisher") String publisher,
+			@FormParam("title") String title,
+			@Context HttpServletResponse servletResponse) throws IOException{
+				Book book = new BookDAOImpl().get(isbn);
+				book.setIsbn(isbn);
+				book.setDateOfPublication(dateOfPublication);
+				book.setPublisher(publisher);
+				book.setTitle(title);
+				bookDao.update(book);
+			}
 	
 	@PUT
 	@Path("/books")
@@ -59,21 +75,5 @@ public class BookService {
 				book.setPublisher(publisher);
 				book.setTitle(title);
 				bookDao.create(book);
-			}
-	
-	@POST
-	@Path("/books")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void update(@FormParam("isbn") String isbn,
-			@FormParam("date_of_publication") int dateOfPublication,
-			@FormParam("publisher") String publisher,
-			@FormParam("title") String title,
-			@Context HttpServletResponse servletResponse) throws IOException{
-				Book book = new Book();
-				book.setIsbn(isbn);
-				book.setDateOfPublication(dateOfPublication);
-				book.setPublisher(publisher);
-				book.setTitle(title);
-				bookDao.update(book);
 			}
 }
