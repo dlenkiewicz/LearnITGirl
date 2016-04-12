@@ -1,0 +1,57 @@
+body {
+	font-family: 'Hind', sans-serif;
+	color: #464b72;
+}
+
+a:hover { 
+	text-decoration: none; 
+}
+
+.displayed  {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title-super {
+	font-size: 100px;
+	text-align: center;
+}
+
+.txt-color {
+	color: #FFB366;
+}
+
+form {
+                margin:50px auto;
+				display: block;
+				max-width: 100%;
+				height: auto;
+}
+.search {
+                
+				padding:8px 15px;
+                background:#EFEFEF;
+                border:0px solid #dbdbdb;
+}
+
+.search-width {
+	width: 250px;
+}
+
+.yellow-button {
+                position:relative;
+                padding:6px 15px;
+                left:-8px;
+                border:2px solid #FFB366;
+                background-color:#FFB366;
+                color:#fafafa;
+}
+.yellow-button:hover  {
+                background-color:#fafafa;
+                color:#FFB366;
+}
+
+
+
+
