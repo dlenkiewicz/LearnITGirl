@@ -21,3 +21,11 @@ Repository for my Java application written during LearnITGirl mentorship program
 			week 4 - Learning RESTful Web Services. Writing service layer.
 			
 			week 5 - Resolving issues. Continuing on writing service layer.
+			
+			week 6 - Break.
+			
+			week 7 - Learning JavaScript.
+			
+			week 8 - Learning AJAX.
+			
+			week 9 - Creating user interface - main page, registration, logging in.
