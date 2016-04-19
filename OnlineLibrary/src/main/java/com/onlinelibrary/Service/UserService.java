@@ -30,12 +30,19 @@ public class UserService {
 		return userDao.getAll();
 	   }	
 	
-	@GET
+	/*@GET
 	@Path("/users/{id}")
 	@Produces(MediaType.APPLICATION_XML)
 	public User get(@PathParam("id") int id){
 		return userDao.get(id);
-	   }
+	   }*/
+	
+	@GET
+	@Path("/users/{email}")
+	@Produces(MediaType.APPLICATION_XML)
+	public User getByEmail(@PathParam("email") String email){
+		return userDao.getByEmail(email);
+	}
 	
 	@DELETE
 	@Path("/users/{id}")

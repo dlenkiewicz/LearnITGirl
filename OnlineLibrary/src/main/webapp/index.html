@@ -14,7 +14,7 @@
 		<div class="container">
 			<br>
 			<div class="row text-right">
-				<a href="login.html" class="yellow-button">Log In</a>
+				<button class="yellow-button" data-toggle="modal" data-target="#loginModal">Log in</button>
 				<button class="yellow-button" data-toggle="modal" data-target="#registerModal">Register</button>
 			</div>
 			<div class="row">
@@ -42,40 +42,69 @@
 							<h4 class="modal-title txt-color">Register</h4>
 						</div>
 						<div class="modal-body">
-							<form action="rest/UserService/users" method="put">
+							<form id="form">
 								<div class="row">
-									<div class="col-sm-6">
-										Name:<br>
-										<input type="text" id="name" required><br><br>
-										E-mail:<br>
-										<input type="text" id="email" required><br><br>
-										City:<br>
-										<input type="text" id="city"><br><br>
-										Password:<br>
-										<input type="text" id="password" required><br><br>
-									</div>
-									<div class="col-sm-6">
-										Surname:<br>
-										<input type="text" id="surname" required><br><br>
-										Street address:<br>
-										<input type="text" id="street_address"><br><br>
-										Phone number:<br>
-										<input type="text" id="phone_number"><br><br>
-									</div>
+										<div class="col-sm-6 text-center">
+											*Name:<br>
+											<input type="text" id="name" required><br><br>
+											*E-mail:<br>
+											<input type="text" id="email" required><br><br>
+											City:<br>
+											<input type="text" id="city"><br><br>
+											*Password:<br>
+											<input type="password" id="password" required><br><br>
+										</div>
+										<div class="col-sm-6 text-center">
+											*Surname:<br>
+											<input type="text" id="surname" required><br><br>
+											Street address:<br>
+											<input type="text" id="street_address"><br><br>
+											Phone number:<br>
+											<input type="text" id="phone_number"><br><br>
+										</div>	
+								</div>
+								<br><br>
+								<div class="row text-center">
+									<button type="submit" onclick="createUser()" class="yellow-button">Submit</button>
+									<button type="button" class="yellow-button" data-dismiss="modal">Close</button>
 								</div>
 							</form>
 						</div>
 						<div class="modal-footer">
-							<button onclick="createUser()" class="yellow-button" data-dismiss="modal">Submit</button>
-							<button type="button" class="yellow-button" data-dismiss="modal">Close</button>
+							<div id="alert"></div>
 						</div>
 					</div>
 				</div>
-			</div>				
+			</div>
+			<div class="modal fade" id="loginModal" role="dialog">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title txt-color">Log in</h4>
+						</div>
+						<div class="modal-body">
+							<div class="row text-center">	
+								<form action="LoginServlet" method="post">
+									E-mail:<br>
+									<input type="text" name="user" required><br><br>
+									Password:<br>
+									<input type="password" name="pwd" required><br><br><br><br>
+									<button type="submit" class="yellow-button" value="Log in">Log in</button>
+									<button type="button" class="yellow-button" data-dismiss="modal">Close</button>
+								</form>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<div id="alert2"></div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script>
 			window.onload = sendRequest;
-
+		
 			function sendRequest() {
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
@@ -101,7 +130,7 @@
 				}
 				document.getElementById("books").innerHTML = table;
 			}
-			
+
 			function createUser() {
 				var name = document.getElementById("name").value;
 				var surname = document.getElementById("surname").value;
@@ -110,7 +139,19 @@
 				var city = document.getElementById("city").value;
 				var phone = document.getElementById("phone_number").value;
 				var password = document.getElementById("password").value;
-				var path = "name="+name+"&surname="+surname+"&email="+email+"&password="+password;
+				var path;
+				if(name != ""){
+					path += "&name="+name;
+				};
+				if(surname != ""){
+					path += "&surname="+surname;
+				};
+				if(email != ""){
+					path += "&email="+email;
+				};
+				if(password != ""){
+					path += "&password="+password;
+				};
 				if(street != ""){
 					path += "&street_address"+street;
 				};
@@ -121,9 +162,28 @@
 					path += "&phone_number"+phone;
 				};
 				var xhttp = new XMLHttpRequest();
-				xhttp.open("PUT", "rest/UserService/users", true);
-				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xhttp.send(path);
+				var validEmail = /^[0-9a-z_.-]+@[0-9a-z.-]+\.[a-z]{2,3}$/i;
+				var validName = /^[a-z]+$/i;
+				if(validEmail.test(email) && validName.test(name) && validName.test(surname)){
+					xhttp.open("PUT", "rest/UserService/users", true);
+					xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xhttp.send(path);
+					
+					document.getElementById("alert").setAttribute("class", "alert alert-success text-center");
+					document.getElementById("alert").innerHTML="Registration was succesful!";
+					
+					document.getElementById("name").value = "";
+					document.getElementById("surname").value = "";
+					document.getElementById("email").value = "";
+					document.getElementById("street_address").value = "";
+					document.getElementById("city").value = "";
+					document.getElementById("phone_number").value = "";
+					document.getElementById("password").value = "";
+				}
+				else{
+					document.getElementById("alert").setAttribute("class", "alert alert-danger text-center");
+					document.getElementById("alert").innerHTML="Invalid data. Registration failed. Try again.";
+				}
 			}
 		</script>
 	</body>
